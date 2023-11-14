@@ -18,15 +18,20 @@ async function viewalldepartment() {
     console.table(employees[0])
 }
 async function viewalljobtitles() {
-
+    const employees = await db.promise().query("SELECT * FROM employees_db.job_titles;")
 }
+
+async function viewallemployees() {
+    const employees = await db.promise().query("SELECT * FROM employees_db.employees;")
+}
+
 
 async function init() {
     const response = await inquirer.prompt(
         [{
             type: "list",
             message: "Welcome to employee tracker please select what you would like to do",
-            choices: ["view all department", "view all job titles", "view all salary amount",],
+            choices: ["view all department", "view all job titles", "view all employees",],
             name: "menu",
 
         }]
