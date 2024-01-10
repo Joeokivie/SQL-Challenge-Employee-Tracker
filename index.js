@@ -15,11 +15,11 @@ const db = mysql.createConnection(
 );
 async function viewalldepartment() {
     const employees = await db.promise().query("SELECT * FROM employees_db.departments;")
-    console.table(department[0])
+    console.table(employees[0])
 }
 async function viewalljobtitles() {
     const employees = await db.promise().query("SELECT * FROM employees_db.job_titles;")
-    console.table(jobtitles[0])
+    console.table(employees[0])
 }
 
 
@@ -68,6 +68,15 @@ async function init() {
         
     } else if (response.menu === "view all employees") {
         viewallemployees();
-    }
-}
+
+    } else if (response.menu === "add employees") {
+        viewaddemployees();
+        console.log("New line executed!");
+    
+        
+    } 
+
+    } 
+    
+
 init()
