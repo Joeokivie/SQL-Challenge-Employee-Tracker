@@ -50,16 +50,17 @@ async function viewallemployees() {
 //     }
 // }
 
-async function init() {
-    const response = await inquirer.prompt(
+function init() {
+    inquirer.prompt(
         [{
             type: "list",
             message: "Welcome to employee tracker please select what you would like to do",
             choices: ["view all department", "view all job titles", "view all employees", "hi"],
             name: "menu",
 
-        }]
-    )
+        }]).then(answers => { console.log("Answer was: ", answers.menu) }
+        
+    } 
     if (response.menu === "view all department") {
         viewalldepartment()
         
