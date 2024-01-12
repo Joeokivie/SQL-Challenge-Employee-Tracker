@@ -64,7 +64,7 @@ async function init() {
         [{
             type: "list",
             message: "Welcome to employee tracker please select what you would like to do",
-            choices: ["view all department", "view all job titles", "view all employees", "add department", "hi"],
+            choices: ["hi", "view all department", "view all job titles", "view all employees", "add department", "add all employees" ],
             name: "menu",
 
         }]
@@ -81,8 +81,11 @@ async function init() {
 
     } else if (response.menu === "add department") {
         addalldepartment();
-        
-    }
+
+    } else if (response.menu === "add employees") {
+        addallemployees();
+
+        }
      
 
 
