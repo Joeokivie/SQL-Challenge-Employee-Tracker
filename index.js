@@ -16,77 +16,122 @@ const db = mysql.createConnection(
 async function viewalldepartment() {
     const employees = await db.promise().query("SELECT * FROM employees_db.departments;")
     console.table(employees[0])
+    init()
 }
 async function viewalljobtitles() {
     const employees = await db.promise().query("SELECT * FROM employees_db.job_titles;")
     console.table(employees[0])
+
+    init()
 }
 
 
 async function viewallemployees() {
     const employees = await db.promise().query("SELECT * FROM employees_db.employees;")
     console.table(employees[0])
+    init()
 }
 
+async function addalldepartment() {
+    const response = await inquirer.prompt(
+        [{
+            type: "input",
+            message: "pick a department you would like to add",
+            name: "department",
 
+        }]
+    )
+       const employees = await db.promise().query(`INSERT INTO departments (department_name) VALUES('${response.department}')`)
+    console.log(response)
+    init()
+}
+async function addallemployees() {
+    const response = await inquirer.prompt(
+        [{
+            type: "input",
+            message: "select an employee",
+            name: "employees",
 
-// async function init() {
-//     const response = await inquirer.prompt(
-//         [{
-//             type: "list",
-//             message: "Welcome to employee tracker please select what you would like to do",
-//             choices: ["view all department", "view all job titles", "view all employees",],
-//             name: "menu",
+        }]
+    )
+       const employees = await db.promise().query(`INSERT INTO employees (first_name, last_name, job_id, manager_id)VALUES('${response.employees}')`)
+    console.log(response)
+    init()
+}
 
-//         }]
-//     )
-//     if (response.menu === "view all department") {
-//         viewalldepartment()
-        
-//     }
-//     if (response.menu === "view all job titles") {
-//         viewalljobtitles()
-        
-//     }
-// }
-
-function init() {
-    inquirer.prompt(
+async function init() {
+    const response = await inquirer.prompt(
         [{
             type: "list",
             message: "Welcome to employee tracker please select what you would like to do",
-            choices: ["view all department", "view all job titles", "view all employees", "hi"],
+            choices: ["view all department", "view all job titles", "view all employees", "add department", "hi"],
             name: "menu",
 
-        }]).then(answers => { console.log("Answer was: ", answers.menu) }
-        
-    } 
+        }]
+    )
     if (response.menu === "view all department") {
         viewalldepartment()
-        
+
     } else if (response.menu === "view all job titles") {
         viewalljobtitles()
-        
+
     } else if (response.menu === "view all employees") {
         viewallemployees();
 
-    } else if (response.menu === "add employees") {
-        viewaddemployees();
-        console.log("New line executed!");
-    
+
+    } else if (response.menu === "add department") {
+        addalldepartment();
         
-    } 
-    const viewAllEmployees = () => {
-        console.log("viewing all employees");
-        // tutor assisted with this const query as I was stuck here
-        const query = `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.dept_name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id=role.id LEFT JOIN department on role.department_id=department.id LEFT JOIN employee manager on manager.id=employee.manager_id`;
-        con.query(query, function (err, result) {
+    }
+     
+
+
+    const updateJobTitle = () => {
+        con.query("SELECT * FROM role", (err, data) => {
           if (err) throw err;
-          console.table(result);
-          homeMenu();
+      
+          let roles = data.map((role) => ({
+            name: role.title,
+            value: role.id,
+          }));
+      
+          inquirer
+            .prompt([
+              {
+                type: "input",
+                name: "id",
+                message: "Enter the employee ID#:",
+              },
+              {
+                type: "list",
+                name: "roleid",
+                message: "Select their new Role:",
+                choices: roles,
+              },
+            ])
+      
+            .then((answers) => {
+              const sql = "UPDATE employee SET role_id = ? WHERE id = ?";
+              const values = [answers.roleid, answers.id];
+      
+              con.query(sql, values, function (err, result) {
+                if (err) throw err;
+                console.log("Employee role updated successfully.");
+                homeMenu();
+              });
+            });
         });
       };
-    } 
+      
+      const quit = () => {
+        console.log("quitting app.");
+        con.end();
+        process.exit();
+      };
+      
     
+}
+
+
 
 init()
