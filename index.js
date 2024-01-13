@@ -47,12 +47,19 @@ async function addalldepartment() {
 }
 async function addallemployees() {
     const response = await inquirer.prompt(
-        [{
-            type: "input",
-            message: "select an employee",
-            name: "employees",
+        {
+            type: 'input', 
+            name: 'firstName',
+            message: 'Enter Employee First Name:'
 
-        }]
+        }, 
+        {
+            type: 'input', 
+            name: 'lastName',
+            message: 'Enter Employee Last Name:'
+ 
+        }
+        
     )
        const employees = await db.promise().query(`INSERT INTO employees (first_name, last_name, job_id, manager_id)VALUES('${response.employees}')`)
     console.log(response)
@@ -82,7 +89,7 @@ async function init() {
     } else if (response.menu === "add department") {
         addalldepartment();
 
-    } else if (response.menu === "add employees") {
+    } else if (response.menu === "add all employees") {
         addallemployees();
 
         }
