@@ -62,15 +62,16 @@ async function addallemployees() {
         {
             type: 'input', 
             name: 'jobId',
-            message: 'Enter Job ID'
+            message: 'Enter Employee Job ID'
  
         },
         {
             type: 'input', 
             name: 'managerId',
-            message: 'Enter Manager ID'
+            message: 'Enter Manager ID :'
  
         },
+        
     ]
     )
     let employee = {
