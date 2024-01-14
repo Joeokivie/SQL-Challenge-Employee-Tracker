@@ -46,7 +46,7 @@ async function addalldepartment() {
     init()
 }
 async function addallemployees() {
-    const response = await inquirer.prompt(
+    const response = await inquirer.prompt([
         {
             type: 'input', 
             name: 'firstName',
@@ -59,18 +59,31 @@ async function addallemployees() {
             message: 'Enter Employee Last Name:'
  
         },
-            
-        
-
-
-
+        {
+            type: 'input', 
+            name: 'jobId',
+            message: 'Enter Job ID'
+ 
+        },
+        {
+            type: 'input', 
+            name: 'managerId',
+            message: 'Enter Manager ID'
+ 
+        },
+    ]
     )
+    let employee = {
+        first_name: response.firstName,
+        last_name: response.lastName,
+        job_id: response.jobId,
+        manager_id: response.managerId
+      }
     const employees = await db.promise().query(`
     INSERT INTO employees (first_name, last_name, job_id, manager_id)
-    VALUES ('${response.first_name}', '${response.last_name}', ${response.job_id}, ${response.manager_id})
+    VALUES ('${employee.first_name}', '${employee.last_name}', '${employee.job_id}', '${employee.manager_id}')
   `);
-    console.log(response)
-    init()
+  console.log(employees)
 }
 
 async function init() {
