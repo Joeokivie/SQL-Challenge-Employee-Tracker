@@ -58,10 +58,17 @@ async function addallemployees() {
             name: 'lastName',
             message: 'Enter Employee Last Name:'
  
-        }
+        },
+            
         
+
+
+
     )
-       const employees = await db.promise().query(`INSERT INTO employees (first_name, last_name, job_id, manager_id)VALUES('${response.employees}')`)
+    const employees = await db.promise().query(`
+    INSERT INTO employees (first_name, last_name, job_id, manager_id)
+    VALUES ('${response.first_name}', '${response.last_name}', ${response.job_id}, ${response.manager_id})
+  `);
     console.log(response)
     init()
 }
