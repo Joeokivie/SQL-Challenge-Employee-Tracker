@@ -96,48 +96,10 @@ async function init() {
      
 
 
-    const updateJobTitle = () => {
-        con.query("SELECT * FROM role", (err, data) => {
-          if (err) throw err;
+     
       
-          let roles = data.map((role) => ({
-            name: role.title,
-            value: role.id,
-          }));
       
-          inquirer
-            .prompt([
-              {
-                type: "input",
-                name: "id",
-                message: "Enter the employee ID#:",
-              },
-              {
-                type: "list",
-                name: "roleid",
-                message: "Select their new Role:",
-                choices: roles,
-              },
-            ])
-      
-            .then((answers) => {
-              const sql = "UPDATE employee SET role_id = ? WHERE id = ?";
-              const values = [answers.roleid, answers.id];
-      
-              con.query(sql, values, function (err, result) {
-                if (err) throw err;
-                console.log("Employee role updated successfully.");
-                homeMenu();
-              });
-            });
-        });
-      };
-      
-      const quit = () => {
-        console.log("quitting app.");
-        con.end();
-        process.exit();
-      };
+           
       
     
 }
