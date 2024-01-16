@@ -51,6 +51,7 @@ async function addallemployees() {
             type: 'input',
             name: 'firstName',
             message: 'Enter Employee First Name:'
+            
 
         },
         {
@@ -136,13 +137,13 @@ async function init() {
         const response = await inquirer.prompt(
             [{
                 type: "input",
-                message: "which employee is changing roles",
+                message: "which employee is changing roles? Please use Employee ID:",
                 name: "employee",
 
     
             },{
                 type: "input",
-                message: "what is the new role",
+                message: "what is the new role? Please use Role ID:",
                 name: "role",
             }]
         )
