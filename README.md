@@ -17,7 +17,7 @@ We used Node.js for this project and the npm packages:
 MySQL2: 3.6.2 Dotenv: 16.3.1 Inquirer: 8.2.4
 
 # Walkthrough video
-[
+https://drive.google.com/file/d/1ZIyuqCckjP-sdypjT6XL320fYW0eIWY-/view?usp=drive_link
 ](https://drive.google.com/file/d/1ZIyuqCckjP-sdypjT6XL320fYW0eIWY-/view?usp=drive_link)
 # Features
 The application will repeatedly ask the user if they have any more actions they would like to do with the database after they have completed their initial intended action. I constructed a function that transforms an array of objects with identical attributes into an array of tables that are displayed in the terminal. 
